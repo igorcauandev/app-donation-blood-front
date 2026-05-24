@@ -7,3 +7,8 @@
   flex: 1;
   overflow-y: auto;
 }
+.main-content.full-width {
+  margin-left: 0 !important;
+  width: 100% !important;
+  padding: 0 !important;
+}

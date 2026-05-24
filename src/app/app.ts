@@ -1,14 +1,26 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { PainelComponent } from './painel-controle/painel-controle';
-import { SidebarComponent } from './sidebar-component/sidebar-component';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { SidebarComponent } from './sidebar-component/sidebar-component'; // ajuste o caminho se necessário
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, PainelComponent, SidebarComponent],
+  standalone: true,
+  imports: [CommonModule, RouterOutlet, SidebarComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css']
 })
 export class App {
-  protected readonly title = signal('app-donation-blood-front');
+  private router = inject(Router);
+
+  isLoginPage = false;
+
+  constructor() {
+    this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe((e: any) => {
+        this.isLoginPage = (e.urlAfterRedirects ?? e.url) === '/login';
+      });
+  }
 }
