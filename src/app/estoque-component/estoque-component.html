@@ -52,12 +52,37 @@
         ></div>
       </div>
 
-      <!-- Rodapé: Estoque / Mínimo -->
-      <div class="card-footer">
-        <span class="label-estoque">Estoque</span>
-        <span class="label-min">Min: {{ item.minimo }}</span>
-      </div>
+      <!-- Rodapé: Estoque / Mínimo — substitui o card-footer existente -->
+<!-- Rodapé: Estoque / Mínimo -->
+<div class="card-footer">
+  <span class="label-estoque">Estoque</span>
+
+  <div class="footer-acoes">
+    <!-- botão sempre visível — edita a primeira bolsa se houver, senão abre o modal de adicionar -->
+    <button
+      class="btn-editar-card"
+      [title]="item.bolsas.length > 0 ? 'Editar bolsa #' + item.bolsas[0].id : 'Nenhuma bolsa para editar'"
+      [disabled]="item.bolsas.length === 0"
+      (click)="item.bolsas.length > 0 ? abrirAtualizarBolsa(item.bolsas[0]) : null"
+    >
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+      </svg>
+    </button>
+    <span class="label-min">Min: {{ item.minimo }}</span>
+  </div>
+</div>
     </div>
   </div>
 
 </div>
+
+<!-- MODAL ATUALIZAR — no final do arquivo, fora do wrapper -->
+<app-modal-atualizar-bolsa
+  *ngIf="modalAtualizarAberto && bolsaParaAtualizar"
+  [bolsa]="bolsaParaAtualizar!"
+  (fechar)="fecharModalAtualizar()"
+  (bolsaAtualizada)="aoBolsaAtualizada()"
+/>

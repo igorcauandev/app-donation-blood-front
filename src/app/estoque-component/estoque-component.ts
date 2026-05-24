@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ServiceEstoque, Bolsa } from './estoque-service';
 import { ModalNovoEstoque } from './modal-novo-estoque/modal-novo-estoque';
+import { ModalAtualizarBolsaComponent } from './modal-atualizar-estoque/modal-atualizar-estoque';
 
 // Mínimos recomendados por tipo (regra de negócio local)
 const MINIMOS: Record<string, number> = {
@@ -23,7 +24,7 @@ export interface StockCard {
 @Component({
   selector: 'app-estoque',
   standalone: true,
-  imports: [CommonModule, ModalNovoEstoque],
+  imports: [CommonModule, ModalNovoEstoque, ModalAtualizarBolsaComponent],
   templateUrl: './estoque-component.html',
   styleUrls: ['./estoque-component.css']
 })
@@ -38,6 +39,9 @@ export class EstoqueComponent implements OnInit {
   modalAberto = false;
   bolsaSelecionada: Bolsa | null = null;
   tipoPreSelecionado = '';
+
+  modalAtualizarAberto  = false;
+  bolsaParaAtualizar: Bolsa | null = null;
 
   ngOnInit(): void {
     this.carregarBolsas();
@@ -148,4 +152,19 @@ export class EstoqueComponent implements OnInit {
   disableHeader(){
     ;
   }
+
+  abrirAtualizarBolsa(bolsa: Bolsa): void {
+  this.bolsaParaAtualizar   = { ...bolsa };
+  this.modalAtualizarAberto = true;
+}
+
+fecharModalAtualizar(): void {
+  this.modalAtualizarAberto = false;
+  this.bolsaParaAtualizar   = null;
+}
+
+aoBolsaAtualizada(): void {
+  this.fecharModalAtualizar();
+  this.carregarBolsas();
+}
 }

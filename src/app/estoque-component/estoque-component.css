@@ -226,3 +226,34 @@
   .estoque-wrapper { padding: 16px; }
   .stock-grid      { grid-template-columns: 1fr; }
 }
+
+.footer-acoes {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-editar-card {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--gray-400);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.btn-editar-card:hover:not(:disabled) {
+  background: var(--gray-100);
+  color: var(--gray-700);
+}
+
+/* Botão desabilitado quando não há bolsas */
+.btn-editar-card:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
