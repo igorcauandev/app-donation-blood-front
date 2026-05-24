@@ -2,11 +2,12 @@ import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ServiceCampanhas, Campanha } from './campanha-service';
 import { ModalNovaCampanhaComponent } from './modal-nova-campanha/modal-nova-campanha.component';
+import { ModalAtualizarCampanhaComponent } from './modal-atualizar-campanha/modal-atualizar-campanha';
 
 @Component({
   selector: 'app-campanhas',
   standalone: true,
-  imports: [CommonModule, ModalNovaCampanhaComponent],
+  imports: [CommonModule, ModalNovaCampanhaComponent, ModalAtualizarCampanhaComponent],
   templateUrl: './campanhas-component.html',
   styleUrls: ['./campanhas-component.css']
 })
@@ -16,6 +17,9 @@ export class CampanhasComponent implements OnInit {
 
   campanhas: Campanha[] = [];
   modalAberto = false;
+
+  modalEditarAberto     = false;
+campanhaParaEditar: Campanha | null = null;
 
   ngOnInit(): void {
     this.svc.listar().subscribe({
@@ -74,4 +78,21 @@ export class CampanhasComponent implements OnInit {
       error: (err) => console.error('Erro ao excluir:', err)
     });
   }
+
+  editarCampanha(c: Campanha): void {
+  this.campanhaParaEditar  = { ...c };
+  this.modalEditarAberto   = true;
+}
+
+fecharModalEditar(): void {
+  this.modalEditarAberto  = false;
+  this.campanhaParaEditar = null;
+}
+
+aoCampanhaAtualizada(atualizada: Campanha): void {
+  this.campanhas = this.campanhas.map(c =>
+    c.id === atualizada.id ? { ...c, ...atualizada } : c
+  );
+  this.cdr.detectChanges();
+}
 }

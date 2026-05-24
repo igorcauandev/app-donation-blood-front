@@ -104,3 +104,10 @@
   (fechar)="fecharModal()"
   (doacaoCriada)="aoDoacaoCriada($event)"
 />
+
+<app-modal-atualizar-doacao
+  *ngIf="modalEditarAberto && doacaoParaEditar"
+  [doacao]="doacaoParaEditar!"
+  (fechar)="fecharModalEditar()"
+  (doacaoAtualizada)="aoDoacaoAtualizada($event)"
+/>

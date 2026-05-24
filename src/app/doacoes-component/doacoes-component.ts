@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ServiceDoacoes, Doacao } from './doacoes-service';
 import { ModalNovaDoacaoComponent } from './modal-novo-doacao/modal-novo-doacao';
+import { ModalAtualizarDoacaoComponent } from './modal-atualizar-doacao/modal-atualizar-doacao';
 
 @Component({
   selector: 'app-doacoes',
   standalone: true,
-  imports: [CommonModule, FormsModule, ModalNovaDoacaoComponent],
+  imports: [CommonModule, FormsModule, ModalNovaDoacaoComponent, ModalAtualizarDoacaoComponent],
   templateUrl: './doacoes-component.html',
   styleUrls: ['./doacoes-component.css']
 })
@@ -18,6 +19,9 @@ export class DoacoesComponent implements OnInit {
   busca = '';
   doacoes: Doacao[] = [];
   modalAberto = false;
+
+  modalEditarAberto   = false;
+  doacaoParaEditar: Doacao | null = null;
 
   ngOnInit(): void {
     this.svc.listar().subscribe({
@@ -63,10 +67,6 @@ export class DoacoesComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  editarDoacao(d: Doacao): void {
-    console.log('Editar:', d);
-  }
-
   excluirDoacao(id: number | undefined): void {
     if (id == null) return;
     this.svc.excluir(id).subscribe({
@@ -77,4 +77,23 @@ export class DoacoesComponent implements OnInit {
       error: (err) => console.error('Erro ao excluir:', err)
     });
   }
+
+  // 4. Substituir o editarDoacao e adicionar dois métodos novos
+editarDoacao(d: Doacao): void {
+  this.doacaoParaEditar  = { ...d };
+  this.modalEditarAberto = true;
+}
+
+fecharModalEditar(): void {
+  this.modalEditarAberto = false;
+  this.doacaoParaEditar  = null;
+}
+
+aoDoacaoAtualizada(atualizada: Doacao): void {
+  this.doacoes = this.doacoes.map(d =>
+    d.id === atualizada.id ? { ...d, ...atualizada } : d
+  );
+  this.cdr.detectChanges();
+}
+
 }
