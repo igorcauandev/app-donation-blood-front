@@ -1,0 +1,63 @@
+<!-- estoque.component.html -->
+<div class="estoque-wrapper">
+
+  <!-- CABEÇALHO -->
+  <div class="page-header">
+    <h1 class="page-title">Estoque de Sangue</h1>
+    <p class="page-subtitle">Gestão de estoque por tipo sanguíneo</p>
+  </div>
+
+  <!-- CARD TOTAL -->
+  <div class="total-card">
+    <span class="total-icon">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E53E3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2C6 2 2 9 2 13a10 10 0 0 0 20 0c0-4-4-11-10-11z"/>
+      </svg>
+    </span>
+    <div class="total-info">
+      <span class="total-label">Total de Unidades em Estoque</span>
+      <span class="total-valor">{{ totalUnidades }}</span>
+    </div>
+  </div>
+
+  <!-- GRID DE TIPOS -->
+  <div class="stock-grid">
+    <div
+      class="stock-card"
+      *ngFor="let item of estoques"
+      [ngClass]="getCardClass(item)"
+    >
+      <!-- Topo: tipo + quantidade -->
+      <div class="card-top">
+        <div class="tipo-row">
+          <span class="drop-icon" [ngClass]="getDropClass(item)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6 2 2 9 2 13a10 10 0 0 0 20 0c0-4-4-11-10-11z"/>
+            </svg>
+          </span>
+          <div class="tipo-info">
+            <span class="tipo-nome">{{ item.tipo }}</span>
+            <span class="tipo-status" [ngClass]="getStatusClass(item)">{{ item.status }}</span>
+          </div>
+        </div>
+        <span class="quantidade">{{ item.quantidade }}</span>
+      </div>
+
+      <!-- Barra de progresso -->
+      <div class="progress-track">
+        <div
+          class="progress-fill"
+          [ngClass]="getProgressClass(item)"
+          [style.width.%]="getProgressoPercent(item)"
+        ></div>
+      </div>
+
+      <!-- Rodapé: Estoque / Mínimo -->
+      <div class="card-footer">
+        <span class="label-estoque">Estoque</span>
+        <span class="label-min">Min: {{ item.minimo }}</span>
+      </div>
+    </div>
+  </div>
+
+</div>

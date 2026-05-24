@@ -1,0 +1,148 @@
+<!-- OVERLAY -->
+<div class="modal-overlay" (click)="fecharModal()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+
+    <!-- HEADER -->
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div class="modal-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8"  y1="2" x2="8"  y2="6"/>
+            <line x1="3"  y1="10" x2="21" y2="10"/>
+          </svg>
+        </div>
+        <div>
+          <h2 class="modal-titulo">Nova Campanha</h2>
+          <p class="modal-subtitulo">Preencha os dados da campanha</p>
+        </div>
+      </div>
+      <button class="btn-fechar" (click)="fecharModal()" title="Fechar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6"  x2="6"  y2="18"/>
+          <line x1="6"  y1="6"  x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- CORPO -->
+    <div class="modal-body">
+
+      <!-- ERRO -->
+      <div class="alerta-erro" *ngIf="erroGeral">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8"  x2="12"   y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        {{ erroGeral }}
+      </div>
+
+      <!-- SEÇÃO: IDENTIFICAÇÃO -->
+      <div class="secao-titulo">Identificação</div>
+
+      <div class="form-campo campo-full">
+        <label class="form-label">Título <span class="obrigatorio">*</span></label>
+        <input
+          class="form-input"
+          type="text"
+          placeholder="Ex: Doe Sangue, Doe Vida"
+          [(ngModel)]="form.titulo"
+        />
+      </div>
+
+      <div class="form-campo campo-full" style="margin-top: 14px;">
+        <label class="form-label">Descrição</label>
+        <textarea
+          class="form-input form-textarea"
+          placeholder="Descreva o objetivo da campanha..."
+          rows="3"
+          [(ngModel)]="form.descricao"
+        ></textarea>
+      </div>
+
+      <div class="form-campo campo-full" style="margin-top: 14px;">
+        <label class="form-label">ID do Centro</label>
+        <input
+          class="form-input"
+          type="number"
+          placeholder="Ex: 1"
+          min="1"
+          [(ngModel)]="form.idCentro"
+        />
+        <span class="form-dica">Opcional — deixe vazio se não houver centro vinculado</span>
+      </div>
+
+      <!-- SEÇÃO: PERÍODO E STATUS -->
+      <div class="secao-titulo" style="margin-top: 24px;">Período e Status</div>
+
+      <div class="form-linha">
+        <div class="form-campo">
+          <label class="form-label">Data de Início</label>
+          <input
+            class="form-input"
+            type="date"
+            [(ngModel)]="form.dataInicio"
+          />
+        </div>
+        <div class="form-campo">
+          <label class="form-label">Data de Fim</label>
+          <input
+            class="form-input"
+            type="date"
+            [(ngModel)]="form.dataFim"
+          />
+        </div>
+      </div>
+
+      <div class="form-campo campo-full" style="margin-top: 14px;">
+        <label class="form-label">Status</label>
+        <div class="status-opcoes">
+          <button
+            *ngFor="let op of statusOpcoes"
+            class="status-opt-btn"
+            [class.status-opt-ativa]="form.status === op.valor && op.valor === 'ativa'"
+            [class.status-opt-pausada]="form.status === op.valor && op.valor === 'pausada'"
+            [class.status-opt-encerrada]="form.status === op.valor && op.valor === 'encerrada'"
+            [class.status-opt-selecionado]="form.status === op.valor"
+            type="button"
+            (click)="form.status = op.valor"
+          >
+            <span class="opt-dot"></span>
+            {{ op.label }}
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="modal-footer">
+      <button class="btn-cancelar" (click)="fecharModal()" [disabled]="salvando">
+        Cancelar
+      </button>
+      <button class="btn-salvar" (click)="salvar()" [disabled]="salvando">
+        <span *ngIf="!salvando">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          Criar Campanha
+        </span>
+        <span *ngIf="salvando" class="salvando-spinner">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+               class="spinner-icon">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/>
+          </svg>
+          Salvando...
+        </span>
+      </button>
+    </div>
+
+  </div>
+</div>

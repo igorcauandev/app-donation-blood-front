@@ -1,0 +1,108 @@
+<!-- painel-controle.html -->
+<div class="painel-wrapper">
+
+  <!-- ALERTA CRÍTICO -->
+  <div class="alert-bar" *ngIf="criticalCount > 0">
+    <div class="alert-left">
+      <span class="alert-icon">⚠</span>
+      <div class="alert-text">
+        <span class="alert-title">Estoque Crítico Detectado</span>
+        <span class="alert-sub">
+          {{ criticalCount }} tipo(s) abaixo do mínimo: {{ criticalTypes }}
+        </span>
+      </div>
+    </div>
+    <button class="btn-urgent" (click)="irParaCampanhas()">
+      Gerar Pedido Urgente
+    </button>
+  </div>
+
+  <!-- CABEÇALHO -->
+  <div class="page-header">
+    <h1 class="page-title">Painel de Controle</h1>
+    <p class="page-subtitle">Visão geral do banco de sangue</p>
+  </div>
+
+  <!-- LOADING -->
+  <div class="loading-state" *ngIf="carregando">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E53E3E"
+         stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+         class="spinner">
+      <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/>
+    </svg>
+    Carregando dados...
+  </div>
+
+  <!-- CARDS DE RESUMO -->
+  <div class="summary-grid" *ngIf="!carregando">
+
+    <div class="summary-card">
+      <div class="summary-top">
+        <span class="summary-label">Doadores Ativos</span>
+        <span class="summary-icon icon-donor">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </span>
+      </div>
+      <div class="summary-value">{{ doadoresAtivos }}</div>
+      <div class="summary-footer">{{ totalCadastrados }} total cadastrados</div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-top">
+        <span class="summary-label">Unidades em Estoque</span>
+        <span class="summary-icon icon-stock">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2C6 2 2 9 2 13a10 10 0 0 0 20 0c0-4-4-11-10-11z"/>
+          </svg>
+        </span>
+      </div>
+      <div class="summary-value">{{ bolsasDisponiveis }}</div>
+      <div class="summary-footer">{{ totalBolsas }} bolsas no total</div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-top">
+        <span class="summary-label">Campanhas Ativas</span>
+        <span class="summary-icon icon-request">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8"  y1="2" x2="8"  y2="6"/>
+            <line x1="3"  y1="10" x2="21" y2="10"/>
+          </svg>
+        </span>
+      </div>
+      <div class="summary-value">{{ totalCampanhas }}</div>
+      <div class="summary-footer">Campanhas cadastradas</div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-top">
+        <span class="summary-label">Doações Registradas</span>
+        <span class="summary-icon icon-donate">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </span>
+      </div>
+      <div class="summary-value">{{ totalDoacoes }}</div>
+      <div class="summary-footer">Todas as doações</div>
+    </div>
+
+  </div>
+
+  <!-- SEÇÃO ESTOQUE -->
+  <div class="stock-section" *ngIf="!carregando">
+    <div class="stock-header">
+      <h2 class="stock-title">Estoque por Tipo Sanguíneo</h2>
+      <a class="link-details" [routerLink]="['/estoque']">Ver detalhes</a>
+    </div>
+
+    <!-- Reutiliza o componente de estoque sem padding próprio -->
+    <app-estoque class="painel-bolsas" />
+  </div>
+
+</div>

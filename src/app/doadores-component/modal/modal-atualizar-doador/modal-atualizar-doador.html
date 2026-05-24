@@ -1,0 +1,256 @@
+<!-- OVERLAY -->
+<div class="modal-overlay" (click)="fecharModal()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+
+    <!-- HEADER -->
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div class="modal-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+        </div>
+        <div>
+          <h2 class="modal-titulo">Editar Doador</h2>
+          <p class="modal-subtitulo">Atualize os dados de <strong>{{ doador.nome }}</strong></p>
+        </div>
+      </div>
+      <button class="btn-fechar" (click)="fecharModal()" title="Fechar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- ABAS -->
+    <div class="abas">
+      <button class="aba" [class.aba-ativa]="abaAtiva === 'pessoal'" (click)="irParaAba('pessoal')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+        Dados Pessoais
+      </button>
+      <button class="aba" [class.aba-ativa]="abaAtiva === 'saude'" (click)="irParaAba('saude')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        Saúde
+      </button>
+      <button class="aba" [class.aba-ativa]="abaAtiva === 'endereco'" (click)="irParaAba('endereco')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        Endereço
+      </button>
+    </div>
+
+    <!-- CORPO -->
+    <div class="modal-body">
+
+      <!-- ERRO -->
+      <div class="alerta-erro" *ngIf="erroGeral">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8"  x2="12"   y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        {{ erroGeral }}
+      </div>
+
+      <!-- ABA: DADOS PESSOAIS -->
+      <div class="aba-conteudo" *ngIf="abaAtiva === 'pessoal'">
+        <div class="form-linha">
+          <div class="form-campo campo-full">
+            <label class="form-label">Nome completo <span class="obrigatorio">*</span></label>
+            <input class="form-input" type="text" placeholder="Ex: Maria Fernanda Silva"
+                   [(ngModel)]="form.nome" />
+          </div>
+        </div>
+
+        <div class="form-linha">
+          <div class="form-campo">
+            <label class="form-label">E-mail</label>
+            <input class="form-input" type="email" placeholder="email@exemplo.com"
+                   [(ngModel)]="form.email" />
+          </div>
+          <div class="form-campo">
+            <label class="form-label">Telefone</label>
+            <input class="form-input" type="text" placeholder="(44) 99999-0000"
+                   [(ngModel)]="form.telefone" />
+          </div>
+        </div>
+
+        <div class="form-linha">
+          <div class="form-campo">
+            <label class="form-label">Data de Nascimento</label>
+            <input class="form-input" type="date" [(ngModel)]="form.dataNascimento" />
+          </div>
+          <div class="form-campo">
+            <label class="form-label">Idade</label>
+            <input class="form-input" type="number" placeholder="Ex: 30"
+                   min="0" max="120" [(ngModel)]="form.idade" />
+          </div>
+        </div>
+
+        <div class="form-linha">
+          <div class="form-campo campo-full">
+            <label class="form-label">Gênero</label>
+            <div class="genero-opcoes">
+              <button
+                *ngFor="let g of generos"
+                class="genero-btn"
+                [class.genero-selecionado]="form.genero === g"
+                type="button"
+                (click)="form.genero = g"
+              >{{ g }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABA: SAÚDE -->
+      <div class="aba-conteudo" *ngIf="abaAtiva === 'saude'">
+        <div class="form-campo campo-full">
+          <label class="form-label">Tipo Sanguíneo</label>
+          <div class="tipos-grid">
+            <button
+              *ngFor="let t of tiposSanguineos"
+              class="tipo-btn"
+              [class.tipo-selecionado]="form.tipoSanguineo === t"
+              type="button"
+              (click)="form.tipoSanguineo = t"
+            >{{ t }}</button>
+          </div>
+        </div>
+
+        <div class="form-linha" style="margin-top: 20px;">
+          <div class="form-campo">
+            <label class="form-label">Peso (kg)</label>
+            <input class="form-input" type="number" placeholder="Ex: 70.5"
+                   step="0.1" min="0" [(ngModel)]="form.peso" />
+          </div>
+          <div class="form-campo">
+            <label class="form-label">Altura (m)</label>
+            <input class="form-input" type="number" placeholder="Ex: 1.70"
+                   step="0.01" min="0" max="3" [(ngModel)]="form.altura" />
+          </div>
+        </div>
+
+        <div class="form-campo campo-full" style="margin-top: 20px;">
+          <label class="form-label">Elegível para doação?</label>
+          <div class="toggle-wrapper">
+            <button class="toggle-btn" [class.toggle-sim]="form.elegivelParaDoar === true"
+                    type="button" (click)="form.elegivelParaDoar = true">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Sim — Apto
+            </button>
+            <button class="toggle-btn" [class.toggle-nao]="form.elegivelParaDoar === false"
+                    type="button" (click)="form.elegivelParaDoar = false">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+              Não — Inapto
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABA: ENDEREÇO -->
+      <div class="aba-conteudo" *ngIf="abaAtiva === 'endereco'">
+        <div class="form-linha">
+          <div class="form-campo">
+            <label class="form-label">CEP</label>
+            <input class="form-input" type="text" placeholder="00000-000"
+                   [(ngModel)]="form.endereco.cep" />
+          </div>
+          <div class="form-campo">
+            <label class="form-label">Número</label>
+            <input class="form-input" type="text" placeholder="Ex: 123"
+                   [(ngModel)]="form.endereco.numero" />
+          </div>
+        </div>
+
+        <div class="form-linha">
+          <div class="form-campo campo-full">
+            <label class="form-label">Rua / Logradouro <span class="obrigatorio">*</span></label>
+            <input class="form-input" type="text" placeholder="Ex: Rua das Flores"
+                   [(ngModel)]="form.endereco.rua" />
+          </div>
+        </div>
+
+        <div class="form-linha">
+          <div class="form-campo campo-full">
+            <label class="form-label">Bairro</label>
+            <input class="form-input" type="text" placeholder="Ex: Centro"
+                   [(ngModel)]="form.endereco.bairro" />
+          </div>
+        </div>
+
+        <div class="form-linha">
+          <div class="form-campo">
+            <label class="form-label">Cidade <span class="obrigatorio">*</span></label>
+            <input class="form-input" type="text" placeholder="Ex: Maringá"
+                   [(ngModel)]="form.endereco.cidade" />
+          </div>
+          <div class="form-campo">
+            <label class="form-label">Estado <span class="obrigatorio">*</span></label>
+            <select class="form-input form-select" [(ngModel)]="form.endereco.estado">
+              <option value="" disabled>Selecione...</option>
+              <option *ngFor="let uf of estados" [value]="uf">{{ uf }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="modal-footer">
+      <div class="footer-abas-nav">
+        <button class="btn-nav" *ngIf="abaAtiva !== 'pessoal'"
+                (click)="irParaAba(abaAtiva === 'endereco' ? 'saude' : 'pessoal')">
+          ← Voltar
+        </button>
+        <button class="btn-nav" *ngIf="abaAtiva !== 'endereco'"
+                (click)="irParaAba(abaAtiva === 'pessoal' ? 'saude' : 'endereco')">
+          Próximo →
+        </button>
+      </div>
+      <div class="footer-acoes">
+        <button class="btn-cancelar" (click)="fecharModal()" [disabled]="salvando">
+          Cancelar
+        </button>
+        <button class="btn-salvar" (click)="salvar()" [disabled]="salvando">
+          <span *ngIf="!salvando">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Salvar Alterações
+          </span>
+          <span *ngIf="salvando" class="salvando-spinner">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                 class="spinner-icon">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/>
+            </svg>
+            Salvando...
+          </span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,152 @@
+/* sidebar.component.css */
+
+/* ── VARIÁVEIS ──────────────────────────────────────── */
+:host {
+  --red:        #E53E3E;
+  --red-dark:   #C53030;
+  --red-bg:     #E53E3E;
+  --white:      #FFFFFF;
+  --gray-50:    #F9FAFB;
+  --gray-100:   #F3F4F6;
+  --gray-200:   #E5E7EB;
+  --gray-400:   #9CA3AF;
+  --gray-500:   #6B7280;
+  --gray-700:   #374151;
+  --gray-900:   #111827;
+  --sidebar-w:  220px;
+
+  display: block;
+  height: 100%;
+}
+
+/* ── SIDEBAR ────────────────────────────────────────── */
+.sidebar {
+  width: var(--sidebar-w);
+  min-height: 100vh;
+  background: var(--white);
+  border-right: 1px solid var(--gray-200);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ── MARCA ──────────────────────────────────────────── */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 20px 18px;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--red);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.brand-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--gray-900);
+  line-height: 1.2;
+  letter-spacing: -0.2px;
+}
+
+.brand-sub {
+  font-size: 15px;
+  color: var(--gray-400);
+  line-height: 1.2;
+}
+
+/* ── NAVEGAÇÃO ──────────────────────────────────────── */
+.nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 10px;
+  gap: 2px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--gray-700);
+  font-size: 15px;
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.nav-item:hover {
+  background: var(--gray-100);
+  color: var(--gray-900);
+}
+
+/* estado ativo aplicado pelo routerLinkActive */
+.nav-item.nav-active {
+  background: var(--red);
+  color: var(--white);
+}
+
+.nav-item.nav-active .nav-icon {
+  color: var(--white);
+}
+
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--gray-500);
+  transition: color 0.15s;
+}
+
+.nav-item:hover .nav-icon {
+  color: var(--gray-900);
+}
+
+.nav-label {
+  font-size: 15px;
+  line-height: 1;
+}
+
+/* ── RODAPÉ ─────────────────────────────────────────── */
+.sidebar-footer {
+  padding: 16px 20px 20px;
+  border-top: 1px solid var(--gray-100);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.footer-version {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--gray-700);
+}
+
+.footer-desc {
+  font-size: 15px;
+  color: var(--gray-400);
+}
