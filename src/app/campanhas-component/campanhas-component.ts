@@ -35,7 +35,8 @@ campanhaParaEditar: Campanha | null = null;
   getStatusClass(status: string | undefined): string {
     const s = (status ?? '').toLowerCase();
     if (s === 'ativa')     return 'status-ativa';
-    if (s === 'encerrada') return 'status-encerrada';
+    if (s === 'expirada') return 'status-expirada';
+    if (s === 'inativa')   return 'status-inativa';
     return 'status-pausada';
   }
 
@@ -43,8 +44,8 @@ campanhaParaEditar: Campanha | null = null;
   getStatusLabel(status: string | undefined): string {
     const s = (status ?? '').toLowerCase();
     if (s === 'ativa')     return 'Ativa';
-    if (s === 'encerrada') return 'Encerrada';
-    if (s === 'pausada')   return 'Pausada';
+    if (s === 'expirada') return 'Expirada';
+    if (s === 'inativa')   return 'Inativa';
     return status ?? '—';
   }
 
@@ -80,19 +81,19 @@ campanhaParaEditar: Campanha | null = null;
   }
 
   editarCampanha(c: Campanha): void {
-  this.campanhaParaEditar  = { ...c };
-  this.modalEditarAberto   = true;
-}
+    this.campanhaParaEditar  = { ...c };
+    this.modalEditarAberto   = true;
+  }
 
-fecharModalEditar(): void {
-  this.modalEditarAberto  = false;
-  this.campanhaParaEditar = null;
-}
+  fecharModalEditar(): void {
+    this.modalEditarAberto  = false;
+    this.campanhaParaEditar = null;
+  }
 
-aoCampanhaAtualizada(atualizada: Campanha): void {
-  this.campanhas = this.campanhas.map(c =>
-    c.id === atualizada.id ? { ...c, ...atualizada } : c
-  );
-  this.cdr.detectChanges();
-}
+  aoCampanhaAtualizada(atualizada: Campanha): void {
+    this.campanhas = this.campanhas.map(c =>
+      c.id === atualizada.id ? { ...c, ...atualizada } : c
+    );
+    this.cdr.detectChanges();
+  }
 }
