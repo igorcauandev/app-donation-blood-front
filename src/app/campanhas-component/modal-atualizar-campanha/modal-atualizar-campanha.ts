@@ -23,8 +23,8 @@ export class ModalAtualizarCampanhaComponent implements OnInit {
 
   statusOpcoes = [
     { valor: 'ativa',     label: 'Ativa'     },
-    { valor: 'pausada',   label: 'Pausada'   },
-    { valor: 'encerrada', label: 'Encerrada' },
+    { valor: 'inativa',   label: 'Inativa'   },
+    { valor: 'expirada', label: 'Expirada' },
   ];
 
   form: Campanha = {

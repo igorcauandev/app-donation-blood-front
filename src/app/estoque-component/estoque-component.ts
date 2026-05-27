@@ -53,6 +53,7 @@ export class EstoqueComponent implements OnInit {
         this.todasBolsas = bolsas;
         this.estoques = this.agregarPorTipo(bolsas);
         this.cdr.detectChanges();
+        console.log('Bolsas carregadas:', bolsas);
       },
       error: (err) => console.error('Erro ao carregar bolsas:', err)
     });
@@ -74,7 +75,7 @@ export class EstoqueComponent implements OnInit {
 
     return ORDEM_TIPOS.map(tipo => {
       const todas = mapa[tipo] ?? [];
-      const disponiveis = todas.filter(b => b.status === 'disponivel');
+      const disponiveis = todas.filter(b => b.status === 'ativo');
       const qtd = disponiveis.length;
       const min = MINIMOS[tipo] ?? 10;
 
@@ -154,17 +155,17 @@ export class EstoqueComponent implements OnInit {
   }
 
   abrirAtualizarBolsa(bolsa: Bolsa): void {
-  this.bolsaParaAtualizar   = { ...bolsa };
-  this.modalAtualizarAberto = true;
-}
+    this.bolsaParaAtualizar   = { ...bolsa };
+    this.modalAtualizarAberto = true;
+  }
 
-fecharModalAtualizar(): void {
-  this.modalAtualizarAberto = false;
-  this.bolsaParaAtualizar   = null;
-}
+  fecharModalAtualizar(): void {
+    this.modalAtualizarAberto = false;
+    this.bolsaParaAtualizar   = null;
+  }
 
-aoBolsaAtualizada(): void {
-  this.fecharModalAtualizar();
-  this.carregarBolsas();
-}
+  aoBolsaAtualizada(): void {
+    this.fecharModalAtualizar();
+    this.carregarBolsas();
+  }
 }
