@@ -209,12 +209,12 @@
 
 .label-estoque {
   font-size: 15px;
-  color: var(--gray-400);
+  color: var(--gray-700);
 }
 
 .label-min {
   font-size: 15px;
-  color: var(--gray-400);
+  color: var(--gray-700);
 }
 
 /* ── RESPONSIVO ─────────────────────────────────────── */

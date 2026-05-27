@@ -4,21 +4,7 @@
 
     <!-- HEADER -->
     <div class="modal-header">
-      <div class="modal-header-left">
-        <div class="modal-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-            <line x1="16" y1="2" x2="16" y2="6"/>
-            <line x1="8"  y1="2" x2="8"  y2="6"/>
-            <line x1="3"  y1="10" x2="21" y2="10"/>
-          </svg>
-        </div>
-        <div>
-          <h2 class="modal-titulo">Nova Campanha</h2>
-          <p class="modal-subtitulo">Preencha os dados da campanha</p>
-        </div>
-      </div>
+      <h2 class="modal-titulo">Nova Campanha</h2>
       <button class="btn-fechar" (click)="fecharModal()" title="Fechar">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -33,7 +19,7 @@
 
       <!-- ERRO -->
       <div class="alerta-erro" *ngIf="erroGeral">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10"/>
           <line x1="12" y1="8"  x2="12"   y2="12"/>
@@ -45,61 +31,47 @@
       <!-- SEÇÃO: IDENTIFICAÇÃO -->
       <div class="secao-titulo">Identificação</div>
 
-      <div class="form-campo campo-full">
+      <div class="form-campo">
         <label class="form-label">Título <span class="obrigatorio">*</span></label>
-        <input
-          class="form-input"
-          type="text"
-          placeholder="Ex: Doe Sangue, Doe Vida"
-          [(ngModel)]="form.titulo"
-        />
+        <input class="form-input" type="text"
+               placeholder="Ex: Doe Sangue, Doe Vida"
+               [(ngModel)]="form.titulo" />
       </div>
 
-      <div class="form-campo campo-full" style="margin-top: 14px;">
+      <div class="form-campo">
         <label class="form-label">Descrição</label>
-        <textarea
-          class="form-input form-textarea"
-          placeholder="Descreva o objetivo da campanha..."
-          rows="3"
-          [(ngModel)]="form.descricao"
-        ></textarea>
+        <textarea class="form-input form-textarea"
+                  placeholder="Descreva o objetivo da campanha..."
+                  rows="3"
+                  [(ngModel)]="form.descricao">
+        </textarea>
       </div>
 
-      <div class="form-campo campo-full" style="margin-top: 14px;">
+      <div class="form-campo">
         <label class="form-label">ID do Centro</label>
-        <input
-          class="form-input"
-          type="number"
-          placeholder="Ex: 1"
-          min="1"
-          [(ngModel)]="form.idCentro"
-        />
+        <input class="form-input" type="number"
+               placeholder="Ex: 1" min="1"
+               [(ngModel)]="form.idCentro" />
         <span class="form-dica">Opcional — deixe vazio se não houver centro vinculado</span>
       </div>
 
       <!-- SEÇÃO: PERÍODO E STATUS -->
-      <div class="secao-titulo" style="margin-top: 24px;">Período e Status</div>
+      <div class="secao-titulo">Período e Status</div>
 
       <div class="form-linha">
         <div class="form-campo">
           <label class="form-label">Data de Início</label>
-          <input
-            class="form-input"
-            type="date"
-            [(ngModel)]="form.dataInicio"
-          />
+          <input class="form-input" type="date"
+                 [(ngModel)]="form.dataInicio" />
         </div>
         <div class="form-campo">
           <label class="form-label">Data de Fim</label>
-          <input
-            class="form-input"
-            type="date"
-            [(ngModel)]="form.dataFim"
-          />
+          <input class="form-input" type="date"
+                 [(ngModel)]="form.dataFim" />
         </div>
       </div>
 
-      <div class="form-campo campo-full" style="margin-top: 14px;">
+      <div class="form-campo">
         <label class="form-label">Status</label>
         <div class="status-opcoes">
           <button
@@ -127,14 +99,14 @@
       </button>
       <button class="btn-salvar" (click)="salvar()" [disabled]="salvando">
         <span *ngIf="!salvando">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="20 6 9 17 4 12"/>
           </svg>
           Criar Campanha
         </span>
         <span *ngIf="salvando" class="salvando-spinner">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
                class="spinner-icon">
             <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/>

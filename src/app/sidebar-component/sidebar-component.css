@@ -68,7 +68,7 @@
 
 .brand-sub {
   font-size: 15px;
-  color: var(--gray-400);
+  color: var(--gray-500);
   line-height: 1.2;
 }
 
@@ -103,7 +103,7 @@
 
 /* estado ativo aplicado pelo routerLinkActive */
 .nav-item.nav-active {
-  background: var(--red);
+  background: #B91C1C;
   color: var(--white);
 }
 
@@ -148,5 +148,5 @@
 
 .footer-desc {
   font-size: 15px;
-  color: var(--gray-400);
+  color: var(--gray-500);
 }
